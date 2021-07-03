@@ -1,0 +1,98 @@
+{% extends 'base.html' %}{% load static %} {% block content %}
+
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'expenses' %}">Expenses</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-2">
+                <a href="{% url 'add-expenses' %}" class='btn btn-outline-success font-weight-bold rounded-pill'>Add Expense</a>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        {% include 'partials/_messages.html' %}
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" id='searchField' placeholder="Search">
+                </div>
+            </div>
+        </div>
+        <div class="app-table">
+            <table class="table table-striped border border-4">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exp in page_obj%}
+                    <tr>
+                        <td>{{exp.amount}}</td>
+                        <td>{{exp.category}}</td>
+                        <td>{{exp.description}}</td>
+                        <td>{{exp.date}}</td>
+                        <td>
+                            <a href="{% url 'expense-edit' exp.id %}" class='btn btn-outline-success btn-sm font-weight-bold rounded-pill'>Edit</a>
+                        </td>
+
+                    </tr>
+                    {% endfor%}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-output">
+            <table class="table table-striped  border border-4">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody class='table-body table-hover'>
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class='pagination-container'>
+            <div class="mt-3">
+                Showing Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+            </div>
+            <ul class="pagination float-right">
+                {% if page_obj.has_previous %}
+                <li {% if page_obj.number is 1 %} class="page-item active" {% endif %}><a class="page-link" href="?page=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a></li>
+                {% endif %} {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{page_obj.paginator.num_pages}}">{{page_obj.paginator.num_pages}}</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/searchExpense.js' %}">
+</script>{% endblock %}
