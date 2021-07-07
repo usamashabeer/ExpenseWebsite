@@ -5,6 +5,7 @@ from .models import Category, Expense
 from django.contrib import messages
 from django.core.paginator import Paginator
 import json
+from userpreferences.models import UserPreference
 
 
 # Create your views here.
@@ -15,9 +16,14 @@ def index(request):
     paginator = Paginator(exp, 3)
     page_num = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_num)
+
+    currency = UserPreference.objects.get(user=request.user.id).currency
+
+    currency = currency.split('-')[0]
     context = {
         'page_obj': page_obj,
-        'expenses': exp
+        'expenses': exp,
+        'currency': currency
     }
     return render(request, 'expenses/index.html', context)
 
@@ -83,7 +89,6 @@ def delete_expense(request, id):
 
 
 def search_expense(request):
-
     if request.method == 'POST':
         search_str = json.loads(request.body).get('searchText')
         expenses = Expense.objects.filter(amount__istartswith=search_str, owner=request.user) | Expense.objects.filter(

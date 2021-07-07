@@ -14,7 +14,7 @@ searchField.addEventListener('keyup', (e) => {
     searchVal = e.target.value;
     if (searchVal.trim().length > 0) {
         pagiContainer.style.display = 'none';
-        bodyTable.innerHTML = ''
+        bodyTable.innerHTML = '';
         fetch('/search-expenses', {
                 body: JSON.stringify({ searchText: searchVal }),
                 method: 'POST',
