@@ -50,7 +50,7 @@ def app_expense(request):
         messages.success(request, 'Expense saved successfully')
         return redirect('expenses')
 
-
+@login_required(login_url='/authentication/login')
 def expense_edit(request, id):
     exp = Expense.objects.get(pk=id)
     cat = Category.objects.all()

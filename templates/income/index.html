@@ -6,13 +6,13 @@
             <div class="col-md-10">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'expenses' %}">Expenses</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
+                        <li class="breadcrumb-item"><a href="{% url 'income' %}">Income</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">My Income</li>
                     </ol>
                 </nav>
             </div>
             <div class="col-md-2">
-                <a href="{% url 'add-expenses' %}" class='btn btn-outline-success font-weight-bold rounded-pill'>Add Expense</a>
+                <a href="{% url 'add-income' %}" class='btn btn-outline-success font-weight-bold rounded-pill'>Add Income</a>
                 </a>
             </div>
         </div>
@@ -21,6 +21,7 @@
 
     <div class="container">
         {% include 'partials/_messages.html' %}
+
         <div class="row">
             <div class="col-md-8"></div>
             <div class="col-md-4">
@@ -34,7 +35,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th>Amount ({{currency}})</th>
-                        <th>Category</th>
+                        <th>Source</th>
                         <th>Description</th>
                         <th>Date</th>
                         <th></th>
@@ -42,14 +43,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for exp in page_obj%}
+                    {% for src in page_obj%}
                     <tr>
-                        <td>{{exp.amount}}</td>
-                        <td>{{exp.category}}</td>
-                        <td>{{exp.description}}</td>
-                        <td>{{exp.date}}</td>
+                        <td>{{src.amount}}</td>
+                        <td>{{src.source}}</td>
+                        <td>{{src.description}}</td>
+                        <td>{{src.date}}</td>
                         <td>
-                            <a href="{% url 'expense-edit' exp.id %}" class='btn btn-outline-success btn-sm font-weight-bold rounded-pill'>Edit</a>
+                            <a href="{% url 'income-edit' src.id %}" class='btn btn-outline-success btn-sm font-weight-bold rounded-pill'>Edit</a>
                         </td>
 
                     </tr>
@@ -63,7 +64,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th>Amount ({{currency}})</th>
-                        <th>Category</th>
+                        <th>Source</th>
                         <th>Description</th>
                         <th>Date</th>
                         <th></th>
@@ -94,6 +95,5 @@
         </div>
     </div>
 </div>
-<script src="{% static 'js/searchExpense
-.js' %}">
+<script src="{% static 'js/searchIncome.js' %}">
 </script>{% endblock %}
